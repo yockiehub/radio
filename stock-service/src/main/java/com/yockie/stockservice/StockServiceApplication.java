@@ -1,13 +1,13 @@
-package com.yockie.productsservice;
+package com.yockie.stockservice;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class ProductsServiceApplication {
+public class StockServiceApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(ProductsServiceApplication.class, args);
+		SpringApplication.run(StockServiceApplication.class, args);
 	}
 
 }

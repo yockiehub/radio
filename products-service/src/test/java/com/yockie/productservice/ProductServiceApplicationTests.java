@@ -1,10 +1,10 @@
-package com.yockie.productsservice;
+package com.yockie.productservice;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class ProductsServiceApplicationTests {
+class ProductServiceApplicationTests {
 
 	@Test
 	void contextLoads() {

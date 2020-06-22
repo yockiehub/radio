@@ -9,9 +9,9 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.yockie</groupId>
-	<artifactId>products-service</artifactId>
+	<artifactId>stock-service</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>products-service</name>
+	<name>stock-service</name>
 	<description>Demo project for Kubbo interview</description>
 
 	<properties>
@@ -32,7 +32,7 @@
 		<dependency>
 			<groupId>com.h2database</groupId>
 			<artifactId>h2</artifactId>
-		<scope>runtime</scope>
+			<scope>runtime</scope>
 		</dependency>
 
 		<dependency>
