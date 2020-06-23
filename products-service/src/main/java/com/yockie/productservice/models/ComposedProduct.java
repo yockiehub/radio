@@ -1,25 +1,26 @@
 package com.yockie.productservice.models;
 
 import javax.persistence.Entity;
-import java.util.ArrayList;
+import java.util.HashMap;
 
 @Entity
 public class ComposedProduct extends Product {
 
-    private ArrayList<Long> prodIds;
+    private HashMap<Long, Integer> prods = new HashMap<>();
 
     protected ComposedProduct() {};
 
-    public ComposedProduct(String name, String description, ArrayList<Long> prodIds) {
+    public ComposedProduct(String name, String description, HashMap<Long, Integer> prods) {
         super(name, description);
-        this.prodIds = prodIds;
+        this.prods = prods;
+
     }
 
-    public ArrayList<Long> getProdIds() {
-        return prodIds;
+    public HashMap<Long, Integer> getProds() {
+        return prods;
     }
 
-    public void setStockIds(ArrayList<Long> prodIds) {
-        this.prodIds = prodIds;
+    public void setProds(HashMap<Long, Integer> prods) {
+        this.prods = prods;
     }
 }

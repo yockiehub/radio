@@ -12,7 +12,7 @@ import java.util.List;
 // import com.yockie.productservice.repositories.StockRepository;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:8101")
+@CrossOrigin(origins = "http://localhost:8100")
 @RequestMapping("products")
 public class ProductResource {
 
@@ -38,7 +38,6 @@ public class ProductResource {
         System.out.println(product.getId());
         System.out.println(product.getName());
         System.out.println(product.getDescription());
-        System.out.println(product.getProdIds());
         productBaseRepository.save(product);
 
         return product;

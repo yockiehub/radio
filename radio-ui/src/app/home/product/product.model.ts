@@ -23,7 +23,7 @@ export class ComposedProduct extends Product {
         public id: number,
         public name: string,
         public description: string,
-        public prodIds: number[]
+        public prods: {}
     ) {
         super(id, name, description);
     }
