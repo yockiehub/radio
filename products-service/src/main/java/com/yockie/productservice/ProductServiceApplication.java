@@ -9,17 +9,11 @@ import org.springframework.context.annotation.Bean;
 public class ProductServiceApplication {
 
 	ProductBaseRepository productBaseRepository;
-	// StockRepository stockRepository;
 
 	@Bean
 	public ProductBaseRepository getProductBaseRepository() {
 		return productBaseRepository;
 	}
-
-	/*@Bean
-	public StockRepository getStockRepository() {
-		return stockRepository;
-	}*/
 
 	public static void main(String[] args) {
 		SpringApplication.run(ProductServiceApplication.class, args);

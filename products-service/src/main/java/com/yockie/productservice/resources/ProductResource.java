@@ -5,54 +5,62 @@ import com.yockie.productservice.models.Product;
 import com.yockie.productservice.models.SingleProduct;
 import com.yockie.productservice.repositories.ProductBaseRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 // import com.yockie.productservice.repositories.StockRepository;
 
 @RestController
+@CrossOrigin(origins = "http://localhost:8101")
 @RequestMapping("products")
 public class ProductResource {
 
     @Autowired
-    ProductBaseRepository productBaseRepository;
+    ProductBaseRepository<Product> productBaseRepository;
 
-    /*@Autowired
-    StockRepository stockRepository;*/
+    @RequestMapping("/addsingle")
+    @PostMapping
+    public SingleProduct addSingleProduct(@RequestBody SingleProduct product) {
 
-    @RequestMapping("/addtostock")
-    public String addProductToStock() {
-        ArrayList<Long> al = new ArrayList<>();
+        System.out.println(product.getId());
+        System.out.println(product.getName());
+        System.out.println(product.getDescription());
+        productBaseRepository.save(product);
 
-        Product p1 = new SingleProduct("Green shirt", "it is a green shirt", 100);
-        al.add(p1.getId());
-        Product p2 = new ComposedProduct("Green shirt", "it is a green shirt", al);
-
-        productBaseRepository.save(p1);
-        productBaseRepository.save(p2);
-
-        // stockRepository.save((new Stock(100, p1.getId())));
-
-        return "Products added";
+        return product;
     };
 
-    @RequestMapping("/testdel/{productId}")
+    @RequestMapping("/addcomposed")
+    @PostMapping
+    public ComposedProduct addComposedProduct(@RequestBody ComposedProduct product) {
+
+        System.out.println(product.getId());
+        System.out.println(product.getName());
+        System.out.println(product.getDescription());
+        System.out.println(product.getProdIds());
+        productBaseRepository.save(product);
+
+        return product;
+    };
+
+    @RequestMapping("/delete/{productId}")
+    @DeleteMapping
     public String deleteProduct(@PathVariable("productId") Long id) {
+
         productBaseRepository.delete(productBaseRepository.findById(id));
         return "Product deleted";
     }
 
     @RequestMapping("/getall")
+    @GetMapping
     public List<Product> getAllProducts() {
-        List<Product> all = productBaseRepository.findAll();
-        return all;
+
+        return productBaseRepository.findAll();
     }
 
     @RequestMapping("/{productId}")
+    @GetMapping
     public Product getProduct(@PathVariable("productId") Long id) {
 
         return productBaseRepository.findById(id);
