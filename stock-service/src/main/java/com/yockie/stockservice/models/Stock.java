@@ -12,11 +12,11 @@ public class Stock {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private int amount;
-    private Long simpleProductId;
+    private Long singleProductId;
 
-    public Stock(int amount, Long simpleProductId) {
+    public Stock(int amount, Long singleProductId) {
         this.amount = amount;
-        this.simpleProductId = simpleProductId;
+        this.singleProductId = singleProductId;
     }
 
     protected Stock() {};
@@ -37,11 +37,16 @@ public class Stock {
         this.amount = amount;
     }
 
-    public Long getSimpleProductId() {
-        return simpleProductId;
+    public Long getSingleProductId() {
+        return singleProductId;
     }
 
-    public void setSimpleProductId(Long simpleProductId) {
-        this.simpleProductId = simpleProductId;
+    public void setSingleProductId(Long singleProductId) {
+        this.singleProductId = singleProductId;
+    }
+
+    @Override
+    public String toString() {
+        return "Id: " + this.id + ", Product Id: " + this.singleProductId + ", Amount: " + this.amount;
     }
 }

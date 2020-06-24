@@ -6,6 +6,7 @@ import com.yockie.productservice.models.SingleProduct;
 import com.yockie.productservice.repositories.ProductBaseRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
 
@@ -19,14 +20,22 @@ public class ProductResource {
     @Autowired
     ProductBaseRepository<Product> productBaseRepository;
 
+    @Autowired
+    RestTemplate restTemplate;
+
     @RequestMapping("/addsingle")
     @PostMapping
-    public SingleProduct addSingleProduct(@RequestBody SingleProduct product) {
+    public SingleProduct addSingleProduct(@RequestBody SingleProduct product){
 
         System.out.println(product.getId());
         System.out.println(product.getName());
         System.out.println(product.getDescription());
         productBaseRepository.save(product);
+
+        restTemplate.put("http://127.0.0.1:8082/stock/addsingle", product.getId());
+        // restTemplate.put("http://127.0.0.1:8082/stock/addstock/"+product.getId(), 5);
+
+        //restTemplate.exchange("http://127.0.0.1:8082/stock/addstock/"+product.getId(), HttpMethod.PUT, null, String.class).getBody();
 
         return product;
     };
