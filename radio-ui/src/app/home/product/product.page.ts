@@ -1,15 +1,18 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Product, ComposedProduct, SingleProduct } from './product.model';
 import { ProductService } from './product.service';
 import { Subscription } from 'rxjs';
+import { ActionSheetController, ModalController } from '@ionic/angular';
+import { Router } from '@angular/router';
+import { CreateProductComponent } from './create-product/create-product.component';
 
 @Component({
   selector: 'app-product',
   templateUrl: './product.page.html',
   styleUrls: ['./product.page.scss'],
 })
-export class ProductPage implements OnInit {
+export class ProductPage implements OnInit, OnDestroy {
 
   public products: Product[];
   private productSub: Subscription;
@@ -23,10 +26,13 @@ export class ProductPage implements OnInit {
   prods: Map<number, number> = new Map<number, number>();
 
   private composedProduct: ComposedProduct;
+  isComposed = false;
 
   constructor(
     private http: HttpClient,
-    private productService: ProductService
+    private productService: ProductService,
+    private actionSheetCtrl: ActionSheetController,
+    private modalCtrl: ModalController
   ) { }
 
   ngOnInit() {
@@ -36,8 +42,60 @@ export class ProductPage implements OnInit {
     });
   }
 
+  ngOnDestroy() {
+    this.productSub.unsubscribe();
+  }
+
   ionViewWillEnter() {
     this.productService.fetchProducts().subscribe();
+  }
+
+  createProduct() {
+    this.actionSheetCtrl.create({
+      header: 'Choose option',
+      buttons: [
+        {
+          text: 'Single product',
+          handler: () => {
+            this.isComposed = false;
+            this.openCreateProductModal('single');
+          }
+        },
+        {
+          text: 'Composed product',
+          handler: () => {
+            this.isComposed = true;
+            this.openCreateProductModal('composed');
+          }
+        }
+      ]
+    }).then(actionSheetEl => {
+      actionSheetEl.present();
+    });
+  }
+
+  openCreateProductModal(mode: 'single' | 'composed') {
+
+    this.modalCtrl.create({
+      component: CreateProductComponent,
+      componentProps: { selectedMode: mode }
+    }).then(modalEl => {
+      modalEl.present();
+      return modalEl.onDidDismiss();
+    }).then(resultData => {
+      console.log(resultData.data, resultData.role);
+      if (resultData.role === 'confirm') {
+        const data = resultData.data.productData;
+        console.log('Cheking the resp data: ', data.hasOwnProperty('name'));
+        // TODO distinguish between adding single or composed product
+        this.productService.addSingleProduct(new SingleProduct(
+          null,
+          data.name,
+          data.description
+        ));
+        console.log('Modal to add product should now close');
+      }
+    });
   }
 
   testMethod() {

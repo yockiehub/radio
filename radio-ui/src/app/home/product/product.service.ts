@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Product, SingleProduct, ComposedProduct } from './product.model';
-import { tap, take, map } from 'rxjs/operators';
+import { tap, take, map, switchMap } from 'rxjs/operators';
 
 import { BehaviorSubject } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
@@ -44,24 +44,44 @@ export class ProductService {
 
   fetchProducts() {
     return this.http.get<Product[]>('http://127.0.0.1:8080/products/getall').pipe(
+      take(1),
       tap( products => {
         console.log('Fetching products: ', products);
         this._products.next(products);
-        return products;
       })
     );
-    /* .subscribe( products => {
-      console.log('Fetching products: ', products);
-      this._products.next(products);
-      return products;
-    });
-    */
   }
 
   addSingleProduct(singleProduct: SingleProduct) {
-    this.http.post<SingleProduct>('http://127.0.0.1:8080/products/addcsingle', {... singleProduct}).subscribe(
+    /*
+    let prodId;
+    return this.http.post<SingleProduct>('http://127.0.0.1:8080/products/addsingle', {... singleProduct}).pipe(
+      // take(1),
+      switchMap(
+        resp => {
+          console.log('Single product added: ', resp);
+          prodId = resp.id;
+          return this.products;
+        }
+      ),
+      take(1),
+      tap(products => {
+        singleProduct.id = prodId;
+        this._products.next(products.concat(singleProduct));
+      })
+    );
+*/
+
+    return this.http.post<SingleProduct>('http://127.0.0.1:8080/products/addsingle', {... singleProduct}).subscribe(
       resp => {
         console.log('Single product added: ', resp);
+        this.products.pipe(
+          take(1),
+          tap(products => {
+            singleProduct.id = resp.id;
+            this._products.next(products.concat(singleProduct));
+          })
+        );
       }
     );
   }
