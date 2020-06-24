@@ -33,9 +33,6 @@ public class ProductResource {
         productBaseRepository.save(product);
 
         restTemplate.put("http://127.0.0.1:8082/stock/addsingle", product.getId());
-        // restTemplate.put("http://127.0.0.1:8082/stock/addstock/"+product.getId(), 5);
-
-        //restTemplate.exchange("http://127.0.0.1:8082/stock/addstock/"+product.getId(), HttpMethod.PUT, null, String.class).getBody();
 
         return product;
     };
@@ -57,6 +54,8 @@ public class ProductResource {
     public String deleteProduct(@PathVariable("productId") Long id) {
 
         productBaseRepository.delete(productBaseRepository.findById(id));
+
+        restTemplate.delete("http://127.0.0.1:8082/stock/delete/" + id);
         return "Product deleted";
     }
 

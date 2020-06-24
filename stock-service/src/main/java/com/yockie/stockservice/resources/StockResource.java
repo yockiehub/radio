@@ -72,6 +72,14 @@ public class StockResource {
 
     }
 
+    @RequestMapping("/delete/{singleProductId}")
+    @DeleteMapping
+    public String deleteStock(@PathVariable("singleProductId") Long singleProductId) {
+        stockRepository.delete(stockRepository.findById(singleProductId));
+
+        return "Stock deleted";
+    }
+
 
 
     // For demo purposes
