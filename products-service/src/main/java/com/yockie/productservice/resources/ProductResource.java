@@ -13,7 +13,9 @@ import java.util.List;
 // import com.yockie.productservice.repositories.StockRepository;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:8100")
+@CrossOrigin(origins = "http://localhost:8100",
+        allowedHeaders = {"Authorization", "Cache-Control", "Content-Type","Access-Control-Allow-Origin"},
+        methods = {RequestMethod.DELETE, RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT})
 @RequestMapping("products")
 public class ProductResource {
 

@@ -3,9 +3,10 @@ import { HttpClient } from '@angular/common/http';
 import { Product, ComposedProduct, SingleProduct } from './product.model';
 import { ProductService } from './product.service';
 import { Subscription } from 'rxjs';
-import { ActionSheetController, ModalController } from '@ionic/angular';
+import { ActionSheetController, ModalController, IonItemSliding, LoadingController } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { CreateProductComponent } from './create-product/create-product.component';
+import { tap, map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-product',
@@ -32,7 +33,8 @@ export class ProductPage implements OnInit, OnDestroy {
     private http: HttpClient,
     private productService: ProductService,
     private actionSheetCtrl: ActionSheetController,
-    private modalCtrl: ModalController
+    private modalCtrl: ModalController,
+    private loadingCtrl: LoadingController
   ) { }
 
   ngOnInit() {
@@ -92,9 +94,26 @@ export class ProductPage implements OnInit, OnDestroy {
           null,
           data.name,
           data.description
-        ));
+        )).subscribe( () => {
+          this.productService.fetchProducts().subscribe();
+        });
         console.log('Modal to add product should now close');
       }
+    });
+  }
+
+  onDeleteProduct(productId: number, slidingItem: IonItemSliding) {
+    slidingItem.close();
+    this.loadingCtrl.create({
+      message: 'Deleting prduct...'
+    }).then(loadingEl => {
+      loadingEl.present();
+      this.productService.deleteProduct(productId).subscribe(
+        () => {
+          this.productService.fetchProducts().subscribe();
+          loadingEl.dismiss();
+        }
+      );
     });
   }
 

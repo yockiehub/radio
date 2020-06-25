@@ -1,28 +1,36 @@
 package com.yockie.ordersservice.models;
 
-import java.util.List;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import java.util.ArrayList;
 
-public class Order {
+@Entity
+public class MyOrder {
 
-    private String id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
     private String status;
     private String creationDate;
     private String deliveryDate;
-    private List<String> productIdList;
+    private ArrayList<Integer> productIdList = new ArrayList<>();
 
-    public Order(String id, String status, String creationDate, String deliveryDate, List<String> productIdList) {
-        this.id = id;
+    protected MyOrder() {}
+
+    public MyOrder(String status, String creationDate, String deliveryDate, ArrayList<Integer> productIdList) {
         this.status = status;
         this.creationDate = creationDate;
         this.deliveryDate = deliveryDate;
         this.productIdList = productIdList;
     }
 
-    public String getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -50,11 +58,11 @@ public class Order {
         this.deliveryDate = deliveryDate;
     }
 
-    public List<String> getProductIdList() {
+    public ArrayList<Integer> getProductIdList() {
         return productIdList;
     }
 
-    public void setProductIdList(List<String> productIdList) {
+    public void setProductIdList(ArrayList<Integer> productIdList) {
         this.productIdList = productIdList;
     }
 }

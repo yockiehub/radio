@@ -44,7 +44,7 @@ export class ProductService {
 
   fetchProducts() {
     return this.http.get<Product[]>('http://127.0.0.1:8080/products/getall').pipe(
-      take(1),
+      //take(1),
       tap( products => {
         console.log('Fetching products: ', products);
         this._products.next(products);
@@ -53,26 +53,8 @@ export class ProductService {
   }
 
   addSingleProduct(singleProduct: SingleProduct) {
-    /*
-    let prodId;
-    return this.http.post<SingleProduct>('http://127.0.0.1:8080/products/addsingle', {... singleProduct}).pipe(
-      // take(1),
-      switchMap(
-        resp => {
-          console.log('Single product added: ', resp);
-          prodId = resp.id;
-          return this.products;
-        }
-      ),
-      take(1),
-      tap(products => {
-        singleProduct.id = prodId;
-        this._products.next(products.concat(singleProduct));
-      })
-    );
-*/
-
-    return this.http.post<SingleProduct>('http://127.0.0.1:8080/products/addsingle', {... singleProduct}).subscribe(
+    return this.http.post<SingleProduct>('http://127.0.0.1:8080/products/addsingle', {... singleProduct});
+    /*return this.http.post<SingleProduct>('http://127.0.0.1:8080/products/addsingle', {... singleProduct}).subscribe(
       resp => {
         console.log('Single product added: ', resp);
         this.products.pipe(
@@ -83,6 +65,19 @@ export class ProductService {
           })
         );
       }
-    );
+    );*/
+  }
+
+  deleteProduct(productId: number) {
+    return this.http.delete(`http://127.0.0.1:8080/products/delete/${productId}`, {responseType: 'text'}); /*.subscribe(
+      () => {
+        this.products.pipe(
+          take(1),
+          tap(products => {
+            this._products.next(products.filter(p => p.id !== productId));
+          })
+        );
+      }
+    );*/
   }
 }

@@ -1,7 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { FormGroup, FormControl } from '@angular/forms';
-import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-create-product',
@@ -12,8 +11,6 @@ export class CreateProductComponent implements OnInit {
 
   @Input() selectedMode: 'single' | 'composed';
   form: FormGroup;
-  formSubs: Subscription;
-  numberOfBooks: number[];
 
   constructor(
     private modalCtrl: ModalController
@@ -33,28 +30,7 @@ export class CreateProductComponent implements OnInit {
       });
     }
     if (this.selectedMode === 'composed') {
-      // TODO
-
-      let group = {}
-      group['numberOfBooks']= new FormControl('');
-      this.form = new FormGroup(group);
-      this.formSubs = this.form.valueChanges.subscribe(val => {
-          this.handleNumberChange(val);
-      });
-
-      this.form = new FormGroup({
-        name: new FormControl(null, {
-          updateOn: 'blur',
-          // validators: [Validators.required, Validators.maxLength(40)]
-        }),
-        description: new FormControl(null, {
-          updateOn: 'blur',
-          // validators: [Validators.required, Validators.maxLength(180)]
-        }),
-        prodIds: new FormControl(null, {
-          updateOn: 'blur',
-        })
-      });
+      
     }
   }
 
@@ -74,20 +50,5 @@ export class CreateProductComponent implements OnInit {
       'confirm');
     }
   }
-
-  handleNumberChange(val: number){
-    // Try to Remove Control for higher number if any.
-    const val_plus_one = val + 1;
-    try{
-      this.form.removeControl(val_plus_one.toString());
-    } catch {}
-    // Add formControls for 1 - number of books that user enters.
-    const numbers = Array(val).fill(val).map((_, idx) =>  idx + 1 );
-    numbers.forEach((num) => {
-      const fc = new FormControl('');
-      this.form.addControl(num.toString(), fc);
-    });
-    this.numberOfBooks = numbers;
-}
 
 }
