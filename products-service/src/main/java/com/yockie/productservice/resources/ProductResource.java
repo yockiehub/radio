@@ -32,9 +32,10 @@ public class ProductResource {
         System.out.println(product.getId());
         System.out.println(product.getName());
         System.out.println(product.getDescription());
+        System.out.println(product.getAmount());
         productBaseRepository.save(product);
 
-        restTemplate.put("http://127.0.0.1:8082/stock/addsingle", product.getId());
+        // restTemplate.put("http://127.0.0.1:8082/stock/addsingle", product.getId());
 
         return product;
     };
@@ -57,7 +58,7 @@ public class ProductResource {
 
         productBaseRepository.delete(productBaseRepository.findById(id));
 
-        restTemplate.delete("http://127.0.0.1:8082/stock/delete/" + id);
+        // restTemplate.delete("http://127.0.0.1:8082/stock/delete/" + id);
         return "Product deleted";
     }
 

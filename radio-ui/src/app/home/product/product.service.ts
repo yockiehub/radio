@@ -35,6 +35,7 @@ export class ProductService {
           prod.id,
           prod.name,
           prod.description,
+          prod.amount
         );
       }
       console.log('Product: ', p);
@@ -68,6 +69,10 @@ export class ProductService {
     );*/
   }
 
+  addComposedProduct(composedProduct: ComposedProduct) {
+    return  this.http.post<ComposedProduct>('http://127.0.0.1:8080/products/addcomposed', {... composedProduct});
+  }
+
   deleteProduct(productId: number) {
     return this.http.delete(`http://127.0.0.1:8080/products/delete/${productId}`, {responseType: 'text'}); /*.subscribe(
       () => {
@@ -79,5 +84,9 @@ export class ProductService {
         );
       }
     );*/
+  }
+
+  calculateComposedProductAvailability(composedProductId: number) {
+
   }
 }

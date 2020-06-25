@@ -22,6 +22,7 @@ export class ProductPage implements OnInit, OnDestroy {
     null,
     'Shirt',
     'A green shirt',
+    10
   );
 
   prods: Map<number, number> = new Map<number, number>();
@@ -88,15 +89,32 @@ export class ProductPage implements OnInit, OnDestroy {
       console.log(resultData.data, resultData.role);
       if (resultData.role === 'confirm') {
         const data = resultData.data.productData;
-        console.log('Cheking the resp data: ', data.hasOwnProperty('name'));
+        // console.log('Cheking the resp data: ', data.hasOwnProperty('name'));
         // TODO distinguish between adding single or composed product
-        this.productService.addSingleProduct(new SingleProduct(
-          null,
-          data.name,
-          data.description
-        )).subscribe( () => {
-          this.productService.fetchProducts().subscribe();
-        });
+        if (mode === 'single') {
+          this.productService.addSingleProduct(new SingleProduct(
+            null,
+            data.name,
+            data.description,
+            data.amount
+          )).subscribe( () => {
+            this.productService.fetchProducts().subscribe();
+          });
+        }
+        if (mode === 'composed') {
+          const prods = {};
+          data.prods.forEach(element => {
+            prods[element.prodId] = element.amount;
+          });
+          this.productService.addComposedProduct(new ComposedProduct(
+            null,
+            data.name,
+            data.description,
+            prods
+          )).subscribe( () => {
+            this.productService.fetchProducts().subscribe();
+          });
+        }
         console.log('Modal to add product should now close');
       }
     });
