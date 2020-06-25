@@ -65,6 +65,14 @@ public class ProductResource {
     @GetMapping
     public List<Product> getAllProducts() {
 
+        /*List<Product> allProds = productBaseRepository.findAll();
+        allProds.stream().map( product -> {
+            Stock stock = restTemplate.getForObject("http://127.0.0.1:8082/stock/getstock/" + product.getId(), Stock.class);
+            return
+        })*/
+
+        // restTemplate.getForObject("http://127.0.0.1:8082/stock/getall",);
+
         return productBaseRepository.findAll();
     }
 
