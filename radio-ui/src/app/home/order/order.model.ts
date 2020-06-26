@@ -2,6 +2,7 @@ export class Order{
     constructor(
         public id: number,
         public status: string,
+        public customer: string,
         public creationDate: string,
         public deliveryDate: string,
         public prods: {}

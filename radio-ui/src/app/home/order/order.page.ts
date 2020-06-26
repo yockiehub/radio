@@ -61,6 +61,7 @@ export class OrderPage implements OnInit, OnDestroy {
         this.orderService.addOrder(new Order(
           null,
           data.status,
+          data.customer,
           new Date().toString(),
           new Date().toString(),
           prods
@@ -95,6 +96,7 @@ export class OrderPage implements OnInit, OnDestroy {
     const order = new Order(
       null,
       'Created',
+      'Test SA',
       new Date().toString(),
       new Date().toString(),
       prods

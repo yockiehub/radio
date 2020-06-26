@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
+import java.util.Map;
 
 // import com.yockie.productservice.repositories.StockRepository;
 
@@ -62,6 +63,21 @@ public class ProductResource {
         return "Product deleted";
     }
 
+    @RequestMapping("getvirtualstock/{composedProductId}")
+    @GetMapping
+    public String getComposedProductVirtualStock(@PathVariable("composedProductId") Long id) {
+        ComposedProduct cp = (ComposedProduct) productBaseRepository.findById(id);
+        int virtualStock = Integer.MAX_VALUE;
+        SingleProduct sp;
+
+        for (Map.Entry<Long, Integer> prod: cp.getProds().entrySet()) {
+            sp = (SingleProduct) productBaseRepository.findById(prod.getKey());
+            if (sp.getAmount()/prod.getValue() < virtualStock) {
+                virtualStock = sp.getAmount()/prod.getValue();
+            }
+        }
+        return String.valueOf(virtualStock);
+    }
     @RequestMapping("/getall")
     @GetMapping
     public List<Product> getAllProducts() {

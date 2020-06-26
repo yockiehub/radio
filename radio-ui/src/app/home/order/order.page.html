@@ -16,7 +16,7 @@
         <ion-list lines="full">
           <ion-item-sliding *ngFor="let order of orders" #slidingItem>
             <ion-item [routerLink]="['/' ,'home', 'tabs', 'product', 'edit', order.id]">
-              <ion-label>{{ order.id }}</ion-label>
+              <ion-label>{{ order.customer }}</ion-label>
             </ion-item>
             <ion-item-options side="end">
               <ion-item-option color="secondary">
