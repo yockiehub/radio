@@ -143,9 +143,11 @@ export class ProductPage implements OnInit, OnDestroy {
     this.prods[1] = 3;
     this.prods[2] = 5;
 
+    console.log('Prods map: ', this.prods);
+
     this.composedProduct = new ComposedProduct(
       null,
-      'Shirt Pack',
+      'Shirt Pack 2',
       'A blue shirt and a green shirt',
       this.prods
     );
