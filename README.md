@@ -12,6 +12,6 @@ The user of this app will be able to:
 - Edit the products that are in storage.
 - Always know how many composed products can be composed with the available individual products on storage. Hence, the user will also know the availability of the stock.
 
-The back-end of the app consists of 3 microservices in Java using the framework Spring Boot, each one dealing with Product, Order, and Stock.
+The back-end of the app consists of 2 microservices in Java using the framework Spring Boot, each one dealing with Product and Order.
 
 The front-end will be another service in Angular 2+.
