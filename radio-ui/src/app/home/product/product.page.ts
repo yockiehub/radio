@@ -111,7 +111,7 @@ export class ProductPage implements OnInit, OnDestroy {
             data.name,
             data.description,
             prods
-          )).subscribe( () => {
+          )).subscribe( res => {
             this.productService.fetchProducts().subscribe();
           });
         }
@@ -136,7 +136,7 @@ export class ProductPage implements OnInit, OnDestroy {
   }
 
   testMethod() {
-    this.productService.getProduct('1');
+    this.productService.calculateComposedProductStock('10');
   }
 
   createProductTest() {

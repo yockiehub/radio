@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Product, SingleProduct, ComposedProduct } from './product.model';
-import { tap, take, map, switchMap } from 'rxjs/operators';
+import { tap, take, map, switchMap, filter } from 'rxjs/operators';
 
 import { BehaviorSubject } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
@@ -21,26 +21,28 @@ export class ProductService {
   }
 
   getProduct(productId: string) {
-    return this.http.get<any>(`http://127.0.0.1:8080/products/${productId}`).subscribe( prod => {
-      let p: Product;
-      if (prod.hasOwnProperty('prods')) {
-        p = new ComposedProduct(
-          prod.id,
-          prod.name,
-          prod.description,
-          prod.prods
-        );
-      } else {
-        p = new SingleProduct(
-          prod.id,
-          prod.name,
-          prod.description,
-          prod.amount
-        );
+    return this.http.get<any>(`http://127.0.0.1:8080/products/${productId}`).subscribe(
+      prod => {
+        let p: Product;
+        if (prod.hasOwnProperty('prods')) {
+          p = new ComposedProduct(
+            prod.id,
+            prod.name,
+            prod.description,
+            prod.prods
+          );
+        } else {
+          p = new SingleProduct(
+            prod.id,
+            prod.name,
+            prod.description,
+            prod.amount
+          );
+        }
+        console.log('Product: ', p);
+        return p;
       }
-      console.log('Product: ', p);
-      return p;
-    });
+    );
   }
 
   fetchProducts() {
@@ -86,7 +88,49 @@ export class ProductService {
     );*/
   }
 
-  calculateComposedProductAvailability(composedProductId: number) {
+  calculateComposedProductStock(composedProductId: string) {
+    // Get composed product
+    // console.log(this.getProduct(composedProductId));
 
+    /*
+    let prodsComp; // : Array<{}>;
+    let singleAmount: Array<{}>;
+    // Find product by id
+    return this.products.pipe(
+      take(1),
+      switchMap( products => {
+        return products.filter( product => {
+          return product.id === composedProductId;
+        });
+      }),
+      // Find products composing the composed product
+      take(1),
+      tap( product => {
+        console.log('target product: ', product);
+        const p = product as ComposedProduct;
+        console.log('target product as composed product: ', p);
+        prodsComp = p.prods; // as Array<{}>;
+        return prodsComp.forEach( prod => {
+          this.products.pipe(
+            // take(1),
+            map( products => {
+              return products.filter( produ => {
+                return produ.id === prod[0];
+              });
+            }),
+            // Compare amount of products with the availability
+            tap( products => {
+              products.forEach( produ => {
+                const pr = produ as SingleProduct;
+                singleAmount[pr.id] = pr.amount;
+              });
+            })
+          );
+          console.log('Prods comp: ', prodsComp);
+          console.log('Per product: ', singleAmount);
+        });
+      })
+    );
+    */
   }
 }
