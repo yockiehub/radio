@@ -19,6 +19,10 @@ export class OrderService {
     return this._orders.asObservable();
   }
 
+  getOrder(orderId: string) {
+    return this.http.get<Order>(`http://127.0.0.1:8081/orders/getorder/${orderId}`);
+  }
+
 
   fetchOrders() {
     return this.http.get<Order[]>('http://127.0.0.1:8081/orders/getall').pipe(
