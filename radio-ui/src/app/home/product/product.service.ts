@@ -21,28 +21,30 @@ export class ProductService {
   }
 
   getProduct(productId: string) {
-    return this.http.get<any>(`http://127.0.0.1:8080/products/${productId}`).subscribe(
-      prod => {
-        let p: Product;
-        if (prod.hasOwnProperty('prods')) {
-          p = new ComposedProduct(
-            prod.id,
-            prod.name,
-            prod.description,
-            prod.prods,
-            prod.virtualAmount
-          );
-        } else {
-          p = new SingleProduct(
-            prod.id,
-            prod.name,
-            prod.description,
-            prod.amount
-          );
+    return this.http.get<any>(`http://127.0.0.1:8080/products/${productId}`).pipe(
+      map(
+        prod => {
+          let p: Product;
+          if (prod.hasOwnProperty('prods')) {
+            p = new ComposedProduct(
+              prod.id,
+              prod.name,
+              prod.description,
+              prod.prods,
+              prod.virtualAmount
+            );
+          } else {
+            p = new SingleProduct(
+              prod.id,
+              prod.name,
+              prod.description,
+              prod.amount
+            );
+          }
+          // console.log('Product: ', p);
+          return p;
         }
-        console.log('Product: ', p);
-        return p;
-      }
+      )
     );
   }
 

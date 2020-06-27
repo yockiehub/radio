@@ -25,7 +25,7 @@ export class ProductPage implements OnInit, OnDestroy {
     10
   );
 
-  prods: Map<number, number> = new Map<number, number>();
+  prods: {[id: number]: number};
 
   private composedProduct: ComposedProduct;
   isComposed = false;
@@ -118,6 +118,10 @@ export class ProductPage implements OnInit, OnDestroy {
         console.log('Modal to add product should now close');
       }
     });
+  }
+
+  onEditProduct(productId: number, slidingItem: IonItemSliding) {
+
   }
 
   onDeleteProduct(productId: number, slidingItem: IonItemSliding) {
