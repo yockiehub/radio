@@ -2,24 +2,19 @@ package com.yockie.ordersservice.models;
 
 public class Product {
 
-    private String id;
+    private Long id;
     private String name;
     private String description;
-    private int stock;
 
-    public Product(String id, String name, String description, int stock) {
-        this.id = id;
+    protected Product() {};
+
+    public Product(String name, String description) {
         this.name = name;
         this.description = description;
-        this.stock = stock;
     }
 
-    public String getId() {
+    public Long getId() {
         return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
     }
 
     public String getName() {
@@ -36,13 +31,5 @@ public class Product {
 
     public void setDescription(String description) {
         this.description = description;
-    }
-
-    public int getStock() {
-        return stock;
-    }
-
-    public void setStock(int stock) {
-        this.stock = stock;
     }
 }

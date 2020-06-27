@@ -9,9 +9,10 @@ import org.springframework.web.client.RestTemplate;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
-@CrossOrigin(origins = {"http://localhost:8100", "http://localhost:8080"},
+@CrossOrigin(origins = {"http://localhost:8100"},
         allowedHeaders = {"Authorization", "Cache-Control", "Content-Type","Access-Control-Allow-Origin"},
         methods = {RequestMethod.DELETE, RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT})
 @RequestMapping("orders")
@@ -50,6 +51,9 @@ public class OrderResource {
     public MyOrder addMyOrder(@RequestBody MyOrder order) {
 
         System.out.println(order.getId());
+        for (Map.Entry<Long, Integer> prod: order.getProds().entrySet()) {
+            restTemplate.put("http://localhost:8080/products/reduceamount/" + String.valueOf(prod.getKey()), prod.getValue());
+        }
         myOrderRepository.save(order);
 
         return order;
@@ -60,8 +64,6 @@ public class OrderResource {
     public String deleteOrder(@PathVariable("orderId") Long id) {
 
         myOrderRepository.delete(myOrderRepository.findById(id));
-
-        // restTemplate.delete("http://127.0.0.1:8082/stock/delete/" + id);
         return "Order deleted";
     }
 }
