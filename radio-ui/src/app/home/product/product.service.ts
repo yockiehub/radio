@@ -29,7 +29,8 @@ export class ProductService {
             prod.id,
             prod.name,
             prod.description,
-            prod.prods
+            prod.prods,
+            prod.virtualAmount
           );
         } else {
           p = new SingleProduct(

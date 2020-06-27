@@ -65,7 +65,7 @@ public class ProductResource {
 
     @RequestMapping("getvirtualstock/{composedProductId}")
     @GetMapping
-    public String getComposedProductVirtualStock(@PathVariable("composedProductId") Long id) {
+    public int getComposedProductVirtualStock(@PathVariable("composedProductId") Long id) {
         ComposedProduct cp = (ComposedProduct) productBaseRepository.findById(id);
         int virtualStock = Integer.MAX_VALUE;
         SingleProduct sp;
@@ -76,7 +76,7 @@ public class ProductResource {
                 virtualStock = sp.getAmount()/prod.getValue();
             }
         }
-        return String.valueOf(virtualStock);
+        return virtualStock;
     }
     @RequestMapping("/getall")
     @GetMapping
@@ -97,6 +97,12 @@ public class ProductResource {
     @GetMapping
     public Product getProduct(@PathVariable("productId") Long id) {
 
-        return productBaseRepository.findById(id);
+        Product product = productBaseRepository.findById(id);
+        if (product instanceof ComposedProduct) {
+            ComposedProduct composedProduct = (ComposedProduct) product;
+            composedProduct.setVirtualAmount(this.getComposedProductVirtualStock(id));
+            return composedProduct;
+        }
+        return product;
     }
 }

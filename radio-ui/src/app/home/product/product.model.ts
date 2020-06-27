@@ -25,7 +25,7 @@ export class ComposedProduct extends Product {
         public name: string,
         public description: string,
         public prods: {},
-        public amount?: number,
+        public virtualAmount?: number,
     ) {
         super(id, name, description);
     }
