@@ -6,7 +6,6 @@ import com.yockie.productservice.models.SingleProduct;
 import com.yockie.productservice.repositories.ProductBaseRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.client.RestTemplate;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,9 +22,6 @@ public class ProductResource {
 
     @Autowired
     ProductBaseRepository<Product> productBaseRepository;
-
-    @Autowired
-    RestTemplate restTemplate;
 
     @RequestMapping("/addsingle")
     @PostMapping

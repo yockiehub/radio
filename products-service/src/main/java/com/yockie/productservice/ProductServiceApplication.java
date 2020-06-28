@@ -10,16 +10,10 @@ import org.springframework.web.client.RestTemplate;
 public class ProductServiceApplication {
 
 	ProductBaseRepository productBaseRepository;
-	RestTemplate restTemplate = new RestTemplate();
 
 	@Bean
 	public ProductBaseRepository getProductBaseRepository() {
 		return productBaseRepository;
-	}
-
-	@Bean
-	public RestTemplate getRestTemplate() {
-		return this.restTemplate;
 	}
 
 	public static void main(String[] args) {
