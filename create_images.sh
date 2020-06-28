@@ -4,4 +4,7 @@ cd products-service
 cd ../orders-service
 ./mvnw install dockerfile:build
 
+cd ../radio-ui
+docker build -t radio-ui-image .
+
 cd ..
