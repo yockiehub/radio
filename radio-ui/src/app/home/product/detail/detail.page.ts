@@ -5,13 +5,14 @@ import { NavController, LoadingController } from '@ionic/angular';
 import { ProductService } from '../product.service';
 
 @Component({
-  selector: 'app-edit',
-  templateUrl: './edit.page.html',
-  styleUrls: ['./edit.page.scss'],
+  selector: 'app-detail',
+  templateUrl: './detail.page.html',
+  styleUrls: ['./detail.page.scss'],
 })
-export class EditPage implements OnInit {
+export class DetailPage implements OnInit {
 
-  product: Product;
+  prodsInComp: {}[];
+  product: SingleProduct | ComposedProduct;
   isLoading = false;
   isSingle = true;
 
@@ -19,7 +20,6 @@ export class EditPage implements OnInit {
     private activatedRoute: ActivatedRoute,
     private navCtrl: NavController,
     private productService: ProductService,
-    private loadingCtrl: LoadingController
   ) { }
 
   ngOnInit() {
@@ -39,7 +39,11 @@ export class EditPage implements OnInit {
           if (prod instanceof ComposedProduct) {
             this.isSingle = false;
             this.product = prod as ComposedProduct;
-            console.log(prod);
+            // TODO : Get to show the products within the composed product
+            this.prodsInComp = Object.keys(this.product.prods).map( id => {
+              return {id, amount: (this.product as ComposedProduct).prods[id]};
+            });
+            console.log(this.product, this.prodsInComp);
           }
           this.isLoading = false;
         }

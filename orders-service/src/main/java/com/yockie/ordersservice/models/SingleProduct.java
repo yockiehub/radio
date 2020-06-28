@@ -1,8 +1,5 @@
-package com.yockie.productservice.models;
+package com.yockie.ordersservice.models;
 
-import javax.persistence.Entity;
-
-@Entity
 public class SingleProduct extends Product {
 
     private int amount;

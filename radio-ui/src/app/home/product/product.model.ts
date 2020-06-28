@@ -12,6 +12,7 @@ export class SingleProduct extends Product {
         public id: number,
         public name: string,
         public description: string,
+        public amount: number
     ) {
         super(id, name, description);
     }
@@ -23,7 +24,8 @@ export class ComposedProduct extends Product {
         public id: number,
         public name: string,
         public description: string,
-        public prods: {}
+        public prods: {[id: number]: number},
+        public virtualAmount?: number,
     ) {
         super(id, name, description);
     }

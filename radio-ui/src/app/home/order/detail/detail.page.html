@@ -1,0 +1,54 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button [defaultHref]="['/', 'home', 'tabs', 'order']"></ion-back-button>
+    </ion-buttons>
+    <ion-title>{{ isLoading ? 'Loading...' :  order.customer + ' (id: ' + order.id + ')' }}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-grid *ngIf="!isLoading">
+    <ion-row>
+      <ion-col size="12" size-sm="8" offset-sm="2" class="ion-text-center">
+        <ion-item lines="none">
+          <ion-label position="stacked">Customer</ion-label>
+          <p>{{ order.customer }}</p>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size="12" size-sm="8" offset-sm="2" class="ion-text-center">
+        <ion-item lines="none"> 
+          <ion-label position="stacked">Status</ion-label>
+          <p>{{ order.status }}</p>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size="12" size-sm="8" offset-sm="2" class="ion-text-center">
+        <ion-item lines="none">
+          <ion-label position="stacked">Creation Date</ion-label>
+          <p>{{ order.creationDate }}</p>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size="12" size-sm="8" offset-sm="2" class="ion-text-center">
+        <ion-item lines="none">
+          <ion-label position="stacked">Delivery Date</ion-label>
+          <p>{{ order.deliveryDate }}</p>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <ion-label position="stacked">List of products</ion-label>
+          <ion-item *ngFor="let o of prodsInOrder" lines="none">
+              <ion-text>Product id: {{ o.id }}</ion-text>
+              <ion-text>Amount: {{ o.amount }}</ion-text>
+          </ion-item>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

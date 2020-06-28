@@ -1,18 +1,11 @@
-package com.yockie.productservice.models;
+package com.yockie.ordersservice.models;
 
-import com.sun.istack.Nullable;
-
-import javax.persistence.Entity;
-import javax.persistence.Transient;
 import java.util.HashMap;
 
-@Entity
 public class ComposedProduct extends Product {
 
     private HashMap<Long, Integer> prods = new HashMap<>();
 
-    @Transient
-    @Nullable
     private int virtualAmount;
 
     protected ComposedProduct() {};

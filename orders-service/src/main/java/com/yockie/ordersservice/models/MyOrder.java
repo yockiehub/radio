@@ -4,7 +4,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import java.util.ArrayList;
+import java.util.HashMap;
 
 @Entity
 public class MyOrder {
@@ -15,15 +15,17 @@ public class MyOrder {
     private String status;
     private String creationDate;
     private String deliveryDate;
-    private ArrayList<Integer> productIdList = new ArrayList<>();
+    private String customer;
+    private HashMap<Long, Integer> prods = new HashMap<>();
 
     protected MyOrder() {}
 
-    public MyOrder(String status, String creationDate, String deliveryDate, ArrayList<Integer> productIdList) {
+    public MyOrder(String status, String creationDate, String deliveryDate, String customer, HashMap<Long, Integer> prods) {
         this.status = status;
         this.creationDate = creationDate;
         this.deliveryDate = deliveryDate;
-        this.productIdList = productIdList;
+        this.customer = customer;
+        this.prods = prods;
     }
 
     public Long getId() {
@@ -58,11 +60,19 @@ public class MyOrder {
         this.deliveryDate = deliveryDate;
     }
 
-    public ArrayList<Integer> getProductIdList() {
-        return productIdList;
+    public String getCustomer() {
+        return customer;
     }
 
-    public void setProductIdList(ArrayList<Integer> productIdList) {
-        this.productIdList = productIdList;
+    public void setCustomer(String customer) {
+        this.customer = customer;
+    }
+
+    public HashMap<Long, Integer> getProds() {
+        return prods;
+    }
+
+    public void setProds(HashMap<Long, Integer> prods) {
+        this.prods = prods;
     }
 }
