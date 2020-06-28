@@ -11,36 +11,39 @@
   <ion-grid *ngIf="!isLoading">
     <ion-row>
       <ion-col size="12" size-sm="8" offset-sm="2" class="ion-text-center">
-        <ion-item>
-          <ion-label position="fixed">Name: {{ product.name }}</ion-label>
+        <ion-item lines="none">
+          <ion-label position="stacked">Name</ion-label>
+          <p>{{ product.name }}</p>
         </ion-item>
       </ion-col>
     </ion-row>
     <ion-row>
       <ion-col size="12" size-sm="8" offset-sm="2" class="ion-text-center">
-        <ion-item>
-          <ion-label position="fixed">Description: {{ product.description }}</ion-label>
+        <ion-item lines="none">
+          <ion-label position="stacked">Description</ion-label>
+          <p>{{ product.description }}</p>
         </ion-item>
       </ion-col>
     </ion-row>
     <ion-row>
       <ion-col size="12" size-sm="8" offset-sm="2" class="ion-text-center">
-        <ion-item>
-          <ion-label *ngIf="isSingle" position="fixed">Amount: {{ product.amount }}</ion-label>
-          <ion-label *ngIf="!isSingle" position="fixed">Amount: {{ product.virtualAmount }}</ion-label>
+        <ion-item *ngIf="isSingle" lines="none">
+          <ion-label position="stacked">Amount</ion-label>
+          <p>{{ product.amount }}</p>
+        </ion-item>
+        <ion-item *ngIf="!isSingle" lines="none">
+          <ion-label position="stacked">Amount</ion-label>
+          <p>{{ product.virtualAmount }}</p>
         </ion-item>
       </ion-col>
     </ion-row>
     <ion-row *ngIf="!isSingle">
-      <ion-col>
-
-        <ion-list lines="none">
-          <ion-item *ngFor="let p of prodsInComp">
-              <p>Product id: {{ p.id }}<p>
-              <p>Amount: {{ p.amount }}<p>
-          </ion-item>
-        </ion-list>
-      
+      <ion-col size="12" size-sm="8" offset-sm="2" class="ion-text-center">
+        <ion-label position="stacked">List of products</ion-label>
+        <ion-item *ngFor="let p of prodsInComp" lines="none">
+          <p>Product id: {{ p.id }}<p>
+          <p>Amount: {{ p.amount }}<p>
+        </ion-item>
       </ion-col>
     </ion-row>
   </ion-grid>

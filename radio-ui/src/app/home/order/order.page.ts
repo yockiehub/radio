@@ -103,25 +103,4 @@ export class OrderPage implements OnInit, OnDestroy {
       );
     });
   }
-
-  testMethod() {
-    const prods: Map<number, number> = new Map<number, number>();
-    prods[1] = 2;
-    prods[2] = 3;
-
-    const order = new Order(
-      null,
-      'Created',
-      'Test SA',
-      new Date().toString(),
-      new Date().toString(),
-      prods
-    );
-    this.http.post('http://127.0.0.1:8081/orders/addorder', {... order}).subscribe(
-      resp => {
-        console.log('Got response: ', resp);
-      }
-    );
-  }
-
 }

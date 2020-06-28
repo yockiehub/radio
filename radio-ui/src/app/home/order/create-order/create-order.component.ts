@@ -51,4 +51,8 @@ export class CreateOrderComponent implements OnInit {
     this.items.push(this.createItem());
   }
 
+  removeItem(i: number) {
+    this.items.removeAt(i);
+  }
+
 }
