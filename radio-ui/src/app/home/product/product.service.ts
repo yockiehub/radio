@@ -60,22 +60,14 @@ export class ProductService {
 
   addSingleProduct(singleProduct: SingleProduct) {
     return this.http.post<SingleProduct>('http://127.0.0.1:8080/products/addsingle', {... singleProduct});
-    /*return this.http.post<SingleProduct>('http://127.0.0.1:8080/products/addsingle', {... singleProduct}).subscribe(
-      resp => {
-        console.log('Single product added: ', resp);
-        this.products.pipe(
-          take(1),
-          tap(products => {
-            singleProduct.id = resp.id;
-            this._products.next(products.concat(singleProduct));
-          })
-        );
-      }
-    );*/
   }
 
   addComposedProduct(composedProduct: ComposedProduct) {
-    return  this.http.post<ComposedProduct>('http://127.0.0.1:8080/products/addcomposed', {... composedProduct});
+    return this.http.post<ComposedProduct>('http://127.0.0.1:8080/products/addcomposed', {... composedProduct});
+  }
+
+  editSingleProduct(singleProduct: SingleProduct) {
+    return this.http.put<SingleProduct>('http://127.0.0.1:8080/products/editsingle', {... singleProduct});
   }
 
   deleteProduct(productId: number) {

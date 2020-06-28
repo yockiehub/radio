@@ -1,15 +1,19 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { FormGroup, FormControl, FormArray, FormBuilder } from '@angular/forms';
+import { Product } from '../product.model';
 
 @Component({
   selector: 'app-create-product',
   templateUrl: './create-product.component.html',
   styleUrls: ['./create-product.component.scss'],
 })
+// Can be used and it is used to either create a product and to edit it
+// Should choose a better name for the component now...
 export class CreateProductComponent implements OnInit {
 
   @Input() selectedMode: 'single' | 'composed';
+  @Input() product: Product;
   form: FormGroup;
 
   orderForm: FormGroup;
@@ -84,6 +88,10 @@ export class CreateProductComponent implements OnInit {
   addItem(): void {
     this.items = this.orderForm.get('items') as FormArray;
     this.items.push(this.createItem());
+  }
+
+  removeItem(i: number) {
+    this.items.removeAt(i);
   }
 
 }
