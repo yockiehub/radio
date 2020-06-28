@@ -19,7 +19,7 @@
               <ion-label>{{ order.customer }}</ion-label>
             </ion-item>
             <ion-item-options side="end">
-              <ion-item-option color="secondary">
+              <ion-item-option color="secondary" (click)="onEditOrderStatus(slidingItem)">
                 <ion-icon name="create" size="large" slot="top"></ion-icon>
               </ion-item-option>
             </ion-item-options>
@@ -28,6 +28,14 @@
                 <ion-icon name="trash" size="large" slot="top"></ion-icon>
               </ion-item-option>
             </ion-item-options>
+            <ion-item [hidden]='hideList'>
+              <ion-label>Choose status</ion-label>
+              <ion-select placeholder="Country" #mySelect (ionChange)='setStatus(order.id)'>
+                <ion-select-option value="created">Created</ion-select-option>
+                <ion-select-option value="deliverying">Deliverying</ion-select-option>
+                <ion-select-option value="complete">Complete</ion-select-option>
+              </ion-select>
+            </ion-item>
           </ion-item-sliding>
         </ion-list>
       </ion-col>

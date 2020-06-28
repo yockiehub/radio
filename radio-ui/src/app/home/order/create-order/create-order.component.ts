@@ -19,9 +19,6 @@ export class CreateOrderComponent implements OnInit {
 
   ngOnInit() {
     this.orderForm = this.formBuilder.group({
-      // status: '',
-      // creationDate: '',
-      // deliveryDate: '',
       customer: '',
       items: this.formBuilder.array([ this.createItem() ])
     });
@@ -35,9 +32,6 @@ export class CreateOrderComponent implements OnInit {
     console.log('OnConfirm: ', this.orderForm);
     this.modalCtrl.dismiss({
       productData: {
-        // status: this.orderForm.value.status,
-        // creationDate: this.orderForm.value.creationDate,
-        // deliveryDate: this.orderForm.value.deliveryDate,
         customer: this.orderForm.value.customer,
         prods: this.orderForm.value.items
       }

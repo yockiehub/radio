@@ -1,9 +1,8 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { Order } from './order.model';
 import { Subscription } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
-import { ProductService } from '../product/product.service';
-import { ActionSheetController, ModalController, LoadingController, IonItemSliding } from '@ionic/angular';
+import { ModalController, LoadingController, IonItemSliding, IonSelect } from '@ionic/angular';
 import { OrderService } from './order.service';
 import { CreateOrderComponent } from './create-order/create-order.component';
 
@@ -16,11 +15,12 @@ export class OrderPage implements OnInit, OnDestroy {
 
   orders: Order[];
   private orderSub: Subscription;
+  @ViewChild('mySelect') selectRef: IonSelect;
+  hideList = true;
 
   constructor(
     private http: HttpClient,
     private orderService: OrderService,
-    private actionSheetCtrl: ActionSheetController,
     private modalCtrl: ModalController,
     private loadingCtrl: LoadingController
     ) { }
@@ -60,16 +60,32 @@ export class OrderPage implements OnInit, OnDestroy {
         });
         this.orderService.addOrder(new Order(
           null,
-          data.status,
+          'created',
           data.customer,
           new Date().toString(),
-          new Date().toString(),
+          null,
           prods
         )).subscribe( res => {
           this.orderService.fetchOrders().subscribe();
         });
         console.log('Modal to add product should now close');
       }
+    });
+  }
+
+  onEditOrderStatus(slidingItem: IonItemSliding) {
+    this.selectRef.open();
+    slidingItem.close();
+
+  }
+
+  setStatus(orderId: string) {
+    console.log(this.selectRef.value);
+    this.orderService.getOrder(orderId).subscribe( order => {
+      order.status = this.selectRef.value;
+      this.orderService.changeOrderStatus(order).subscribe(res => {
+        this.orderService.fetchOrders().subscribe();
+      });
     });
   }
 

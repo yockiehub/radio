@@ -62,6 +62,16 @@ public class OrderResource {
         return order;
     };
 
+    @RequestMapping("/editorderstatus")
+    @PutMapping
+    public MyOrder editOrder(@RequestBody MyOrder order){
+        MyOrder o = myOrderRepository.findById(order.getId());
+        o.setStatus(order.getStatus());
+        myOrderRepository.save(o);
+        return order;
+    };
+
+
     @RequestMapping("/delete/{orderId}")
     @DeleteMapping
     public String deleteOrder(@PathVariable("orderId") Long id) {

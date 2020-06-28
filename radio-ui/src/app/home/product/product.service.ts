@@ -71,61 +71,7 @@ export class ProductService {
   }
 
   deleteProduct(productId: number) {
-    return this.http.delete(`http://127.0.0.1:8080/products/delete/${productId}`, {responseType: 'text'}); /*.subscribe(
-      () => {
-        this.products.pipe(
-          take(1),
-          tap(products => {
-            this._products.next(products.filter(p => p.id !== productId));
-          })
-        );
-      }
-    );*/
+    return this.http.delete(`http://127.0.0.1:8080/products/delete/${productId}`, {responseType: 'text'});
   }
 
-  calculateComposedProductStock(composedProductId: string) {
-    // Get composed product
-    // console.log(this.getProduct(composedProductId));
-
-    /*
-    let prodsComp; // : Array<{}>;
-    let singleAmount: Array<{}>;
-    // Find product by id
-    return this.products.pipe(
-      take(1),
-      switchMap( products => {
-        return products.filter( product => {
-          return product.id === composedProductId;
-        });
-      }),
-      // Find products composing the composed product
-      take(1),
-      tap( product => {
-        console.log('target product: ', product);
-        const p = product as ComposedProduct;
-        console.log('target product as composed product: ', p);
-        prodsComp = p.prods; // as Array<{}>;
-        return prodsComp.forEach( prod => {
-          this.products.pipe(
-            // take(1),
-            map( products => {
-              return products.filter( produ => {
-                return produ.id === prod[0];
-              });
-            }),
-            // Compare amount of products with the availability
-            tap( products => {
-              products.forEach( produ => {
-                const pr = produ as SingleProduct;
-                singleAmount[pr.id] = pr.amount;
-              });
-            })
-          );
-          console.log('Prods comp: ', prodsComp);
-          console.log('Per product: ', singleAmount);
-        });
-      })
-    );
-    */
-  }
 }

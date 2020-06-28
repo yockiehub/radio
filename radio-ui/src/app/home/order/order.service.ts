@@ -34,7 +34,11 @@ export class OrderService {
   }
 
   addOrder(order: Order) {
-    return  this.http.post<Order>('http://127.0.0.1:8081/orders/addorder', {... order});
+    return this.http.post<Order>('http://127.0.0.1:8081/orders/addorder', {... order});
+  }
+
+  changeOrderStatus(order: Order) {
+    return this.http.post<Order>('http://127.0.0.1:8081/orders/editorderstatus',{...  order});
   }
 
   deleteOrder(orderId: number) {

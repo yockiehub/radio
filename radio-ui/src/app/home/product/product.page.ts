@@ -110,6 +110,7 @@ export class ProductPage implements OnInit, OnDestroy {
   }
 
   onEditProduct(productId: string, slidingItem: IonItemSliding) {
+    slidingItem.close();
     this.productService.getProduct(productId).subscribe( prod => {
       this.product = prod;
       this.modalCtrl.create({
