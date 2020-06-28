@@ -24,3 +24,12 @@ The front-end will be another service in Angular 2+.
 Once the images have been created and are stored locally in docker, it will be enough to run the script 'start_microservices.sh'
 
 After this, access the application through 'http://localhost:8100', which will redirect to 'http://localhost:8100/home/tabs/product' as main page.
+
+## How to use
+
+- Views divided in tabs: products and orders
+- Tap '+' symbol in the upper right corner of products or orders tabs to create a new product or order respectively.
+- Tap on list entry to view details of product or order.
+- Swipe left on any item to reveal delete button. Tap to delete.
+- Swipe right on single products and orders to reveal edits. Single products can be edited, orders can have their status changed.
+ 
