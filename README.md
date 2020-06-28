@@ -15,3 +15,10 @@ The user of this app will be able to:
 The back-end of the app consists of 2 microservices in Java using the framework Spring Boot, each one dealing with Product and Order.
 
 The front-end will be another service in Angular 2+.
+
+Instructions to run the app
+
+- Clone project
+- Run script 'build_and_run.sh'
+
+Once the images have been created and are stored locally in docker, it will be enough to run the script 'start_microservices.sh'
