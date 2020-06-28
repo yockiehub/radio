@@ -52,7 +52,10 @@ public class OrderResource {
 
         System.out.println(order.getId());
         for (Map.Entry<Long, Integer> prod: order.getProds().entrySet()) {
-            restTemplate.put("http://localhost:8080/products/reduceamount/" + String.valueOf(prod.getKey()), prod.getValue());
+            // When running locally
+            // restTemplate.put("http://localhost:8080/products/reduceamount/" + String.valueOf(prod.getKey()), prod.getValue());
+            // When running on docker container
+            restTemplate.put("http://172.17.0.4:8080/products/reduceamount/" + String.valueOf(prod.getKey()), prod.getValue());
         }
         myOrderRepository.save(order);
 
