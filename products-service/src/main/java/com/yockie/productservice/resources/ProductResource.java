@@ -31,14 +31,7 @@ public class ProductResource {
     @PostMapping
     public SingleProduct addSingleProduct(@RequestBody SingleProduct product){
 
-        System.out.println(product.getId());
-        System.out.println(product.getName());
-        System.out.println(product.getDescription());
-        System.out.println(product.getAmount());
         productBaseRepository.save(product);
-
-        // restTemplate.put("http://127.0.0.1:8082/stock/addsingle", product.getId());
-
         return product;
     };
 
@@ -46,11 +39,7 @@ public class ProductResource {
     @PostMapping
     public ComposedProduct addComposedProduct(@RequestBody ComposedProduct product) {
 
-        System.out.println(product.getId());
-        System.out.println(product.getName());
-        System.out.println(product.getDescription());
         productBaseRepository.save(product);
-
         return product;
     };
 
@@ -59,14 +48,13 @@ public class ProductResource {
     public String deleteProduct(@PathVariable("productId") Long id) {
 
         productBaseRepository.delete(productBaseRepository.findById(id));
-
-        // restTemplate.delete("http://127.0.0.1:8082/stock/delete/" + id);
         return "Product deleted";
     }
 
     @RequestMapping("getvirtualstock/{composedProductId}")
     @GetMapping
     public int getComposedProductVirtualStock(@PathVariable("composedProductId") Long id) {
+
         ComposedProduct cp = (ComposedProduct) productBaseRepository.findById(id);
         int virtualStock = Integer.MAX_VALUE;
         SingleProduct sp;
@@ -82,6 +70,7 @@ public class ProductResource {
     @RequestMapping("/getall")
     @GetMapping
     public List<Product> getAllProducts() {
+
         return productBaseRepository.findAll();
     }
 
@@ -101,6 +90,7 @@ public class ProductResource {
     @RequestMapping("/addamount/{singleProductId}")
     @PutMapping()
     public String increaseAmount(@PathVariable("singleProductId") Long singleProductId, @RequestBody int amount) {
+
         SingleProduct p = (SingleProduct) productBaseRepository.findById(singleProductId);
         p.setAmount(p.getAmount() + amount);
         productBaseRepository.save(p);
@@ -111,6 +101,7 @@ public class ProductResource {
     @RequestMapping("/reduceamount/{productId}")
     @PutMapping()
     public String decreaseAmount(@PathVariable("productId") Long productId, @RequestBody int amount) {
+
         List<Product> productList = new ArrayList<>();
         Product product = productBaseRepository.findById(productId);
         if (product instanceof SingleProduct) {

@@ -70,17 +70,3 @@ public class OrderResource {
         return "Order deleted";
     }
 }
-
-/*
-
-List<MyOrder> orders = Arrays.asList(new MyOrder(id, "Delivered", new Date().toString(), new Date().toString(), Arrays.asList("foo")));
-
-        return orders.stream().map(order -> {
-            order.getProductIdList().stream().map(productId -> {
-                Product product = restTemplate.getForObject("http://localhost:8080/products/" + productId, Product.class);
-                return product;
-            }).collect(Collectors.toList());
-
-            return new MyOrder(id, "Delivered", new Date().toString(), new Date().toString(), Arrays.asList("p1"));
-        }).collect(Collectors.toList());
- */
