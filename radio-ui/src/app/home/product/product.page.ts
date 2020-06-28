@@ -17,18 +17,9 @@ export class ProductPage implements OnInit, OnDestroy {
 
   public products: Product[];
   private productSub: Subscription;
-
-  private product: SingleProduct = new SingleProduct(
-    null,
-    'Shirt',
-    'A green shirt',
-    10
-  );
-
-  prods: {[id: number]: number};
-
   private composedProduct: ComposedProduct;
   isComposed = false;
+  public product: Product;
 
   constructor(
     private http: HttpClient,
@@ -89,8 +80,6 @@ export class ProductPage implements OnInit, OnDestroy {
       console.log(resultData.data, resultData.role);
       if (resultData.role === 'confirm') {
         const data = resultData.data.productData;
-        // console.log('Cheking the resp data: ', data.hasOwnProperty('name'));
-        // TODO distinguish between adding single or composed product
         if (mode === 'single') {
           this.productService.addSingleProduct(new SingleProduct(
             null,
@@ -120,8 +109,31 @@ export class ProductPage implements OnInit, OnDestroy {
     });
   }
 
-  onEditProduct(productId: number, slidingItem: IonItemSliding) {
-
+  onEditProduct(productId: string, slidingItem: IonItemSliding) {
+    this.productService.getProduct(productId).subscribe( prod => {
+      this.product = prod;
+      this.modalCtrl.create({
+        component: CreateProductComponent,
+        componentProps: { product: this.product, selectedMode: 'single' }
+      }).then(modalEl => {
+        modalEl.present();
+        return modalEl.onDidDismiss();
+      }).then(resultData => {
+        console.log(resultData.data, resultData.role);
+        if (resultData.role === 'confirm') {
+          const data = resultData.data.productData;
+          this.productService.editSingleProduct(new SingleProduct(
+            this.product.id,
+            data.name,
+            data.description,
+            data.amount
+          )).subscribe( () => {
+            this.productService.fetchProducts().subscribe();
+          });
+          console.log('Modal to add product should now close');
+        }
+      });
+    });
   }
 
   onDeleteProduct(productId: number, slidingItem: IonItemSliding) {
@@ -138,30 +150,4 @@ export class ProductPage implements OnInit, OnDestroy {
       );
     });
   }
-
-  testMethod() {
-    this.productService.calculateComposedProductStock('10');
-  }
-
-  createProductTest() {
-    this.prods[1] = 3;
-    this.prods[2] = 5;
-
-    console.log('Prods map: ', this.prods);
-
-    this.composedProduct = new ComposedProduct(
-      null,
-      'Shirt Pack 2',
-      'A blue shirt and a green shirt',
-      this.prods
-    );
-
-    this.http.post('http://127.0.0.1:8080/products/addcomposed', {... this.composedProduct}).subscribe(
-      resp => {
-        console.log('Got response: ', resp);
-      }
-    );
-
-  }
-
 }

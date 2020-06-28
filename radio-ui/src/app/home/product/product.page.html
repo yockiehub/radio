@@ -16,9 +16,9 @@
         <ion-list lines="full">
           <ion-item-sliding *ngFor="let product of products" #slidingItem>
             <ion-item [routerLink]="['/' ,'home', 'tabs', 'product', 'detail', product.id]">
-              <ion-label>Name: {{ product.name }} Id: {{ product.id }}</ion-label>
+              <ion-label>{{ !!product.amount ? 'Single' : 'Composed' }}: {{ product.name }} Id: {{ product.id }}</ion-label>
             </ion-item>
-            <ion-item-options side="end">
+            <ion-item-options *ngIf="!!product.amount" side="end">
               <ion-item-option color="secondary" (click)="onEditProduct(product.id, slidingItem)">
                 <ion-icon name="create" size="large" slot="top"></ion-icon>
               </ion-item-option>
@@ -33,9 +33,4 @@
       </ion-col>
     </ion-row>
   </ion-grid>
-  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
-    <ion-fab-button (click)="createProductTest()">
-      <ion-icon name="arrow-forward-circle"></ion-icon>
-    </ion-fab-button>
-  </ion-fab>
 </ion-content>

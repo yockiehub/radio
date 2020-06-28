@@ -43,6 +43,17 @@ public class ProductResource {
         return product;
     };
 
+    @RequestMapping("/editsingle")
+    @PutMapping
+    public SingleProduct editSingleProduct(@RequestBody SingleProduct product){
+        SingleProduct p = (SingleProduct) productBaseRepository.findById(product.getId());
+        p.setName(product.getName());
+        p.setAmount(product.getAmount());
+        p.setDescription(product.getDescription());
+        productBaseRepository.save(p);
+        return product;
+    };
+
     @RequestMapping("/delete/{productId}")
     @DeleteMapping
     public String deleteProduct(@PathVariable("productId") Long id) {
